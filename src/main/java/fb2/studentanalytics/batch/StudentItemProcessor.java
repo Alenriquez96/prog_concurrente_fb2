@@ -8,6 +8,12 @@ import org.springframework.batch.item.ItemProcessor;
 public class StudentItemProcessor implements ItemProcessor<Student, Student> {
     private static final Logger log = LoggerFactory.getLogger(StudentItemProcessor.class);
 
+    /**
+     * Este procesador transforma el nombre del estudiante a mayúsculas
+     * @param student El objeto estudiante
+     * @return El estudiante transformado
+     * @throws Exception
+     */
     @Override
     public Student process(Student student) throws Exception {
         final String name = student.getName().toUpperCase();

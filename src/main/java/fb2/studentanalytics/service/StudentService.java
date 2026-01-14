@@ -14,16 +14,16 @@ public class StudentService {
     StudentRepository studentRepo;
 
     public Stream<Student> getAllStudentsAsStream() {
-        return studentRepo.findAll().delayElements(Duration.ofSeconds(1)).toStream();
+        return Flux.fromIterable(studentRepo.findAll()).delayElements(Duration.ofSeconds(1)).toStream();
     }
 
     public Flux<Student> getAllStudents(Integer min) {
-        Flux<Student> studentFlux = studentRepo.getStudentsByAverageGradeGreaterThanEqual(min).delayElements(Duration.ofSeconds(1));
+        Flux<Student> studentFlux = Flux.fromIterable(studentRepo.getStudentsByAverageGradeGreaterThanEqual(min)).delayElements(Duration.ofSeconds(1));
         return studentFlux;
     }
 
     public Flux<Student> getAllStudents() {
-        Flux<Student> studentFlux = studentRepo.findAll().delayElements(Duration.ofSeconds(1));
+        Flux<Student> studentFlux = Flux.fromIterable(studentRepo.findAll()).delayElements(Duration.ofSeconds(1));
         return studentFlux;
     }
 }
