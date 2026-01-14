@@ -17,7 +17,7 @@ public class StudentService {
         return Flux.fromIterable(studentRepo.findAll()).delayElements(Duration.ofSeconds(1)).toStream();
     }
 
-    public Flux<Student> getAllStudents(Integer min) {
+    public Flux<Student> getAllStudents(Double min) {
         Flux<Student> studentFlux = Flux.fromIterable(studentRepo.getStudentsByAverageGradeGreaterThanEqual(min)).delayElements(Duration.ofSeconds(1));
         return studentFlux;
     }

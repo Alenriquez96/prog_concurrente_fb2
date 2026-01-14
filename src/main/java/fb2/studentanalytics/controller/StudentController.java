@@ -23,8 +23,8 @@ public class StudentController {
     }
 
     @GetMapping("/top")
-    public Flux<Student> getTopStudents(@RequestParam("min") int min) {
-        return studentService.getAllStudents(min);
+    public Flux<Student> getTopStudents(@RequestParam("min") String min) {
+        return studentService.getAllStudents(Double.parseDouble(min));
     }
 
     @GetMapping("/stream")

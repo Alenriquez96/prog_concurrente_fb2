@@ -32,6 +32,22 @@ Aquí, introducimos las credenciales de:
  - password: sa
 
 Deberíamos poder ver ahora la base de datos:
+
 ![img.png](assets/bbdd.png)
 
+### Spring Batch
+
+Para poder comprobar el buen funcionamiento de Spring Batch, he establecido una lógica que **capitaliza** todos los nombres de los estudiantes y les **transforma la nota** ajustandose a un modelo más español de notas: de 95 -> 9,5
+
+Así, una muestra de datos es:
+    
+    id,name,averageGrade
+    1,John Doe,85
+    2,Jane Smith,92
+    3,Bob Johnson,78
+    4,Alice Williams,88
+
+Y por tanto, los datos transformados producen algo asÍ:
+
 ![img.png](assets/studentstble.png)
+

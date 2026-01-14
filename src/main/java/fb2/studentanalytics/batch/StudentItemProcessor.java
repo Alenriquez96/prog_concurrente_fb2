@@ -17,7 +17,7 @@ public class StudentItemProcessor implements ItemProcessor<Student, Student> {
     @Override
     public Student process(Student student) throws Exception {
         final String name = student.getName().toUpperCase();
-        final int averageGrade = student.getAverageGrade();
+        final double averageGrade = student.getAverageGrade() / 10;
         final Student transformedStudent = new Student(name, averageGrade);
         log.info("Converting (" + student + ") into (" + transformedStudent + ")");
         return transformedStudent;
