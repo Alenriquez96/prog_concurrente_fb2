@@ -9,7 +9,7 @@ import java.time.Duration;
 import java.util.stream.Stream;
 
 @Service
-public class StudentService {
+public class StudentService implements IStudentService{
     @Autowired
     StudentRepository studentRepo;
 

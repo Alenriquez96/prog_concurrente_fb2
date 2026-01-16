@@ -10,7 +10,7 @@ import reactor.core.publisher.Flux;
 import java.time.Duration;
 
 @Service
-public class StudentClientService {
+public class StudentClientService implements IStudentClientService{
     @Autowired
     WebClient webClient;
 
