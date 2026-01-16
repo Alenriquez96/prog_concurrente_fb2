@@ -51,3 +51,69 @@ Y por tanto, los datos transformados producen algo asÍ:
 
 ![img.png](assets/studentstble.png)
 
+### Api Reactiva
+
+Para lanzar los endpoints, podemos usar curl, postman o el propio navegador.
+
+Según el sistema operativo, podemos usar curl de la sigueinte manera:
+
+ - Linux/Mac (bash): curl -N http://localhost:8080/students
+
+ - Windows (CMD): curl -N "http://localhost:8080/students"
+
+Lo recomendable, al ser todo GET, es usar el navegador.
+
+#### GET /students
+
+Navegar a http://localhost:8080/students con el navegador. 
+Saldrán todos los estudiantes.
+
+#### GET /students/top
+
+Navegar a http://localhost:8080/students/top?min=5.
+Traerá los estudiantes aprobados. Importante pasar el parámetro de min.
+
+#### GET /students/stream
+
+Navegar a http://localhost:8080/students/stream
+Devuelve todos los estudiantes como stream. Vendrán con un intervalo de 50 milisegundos. 
+
+Debería verse bien en cualquier navegador, en el caso contrario probar curl:
+CMD -> curl -N http://localhost:8080/students
+
+![img.png](assets/streamresponse.png)
+
+### Microservicio + Patrones
+
+En este proyecto se simulan patrones de arquitectura de microservicios dentro de un único despliegue. 
+El controlador GatewayController actúa como un API Gateway, centralizando las peticiones externas. 
+El servicio StudentClientService representa una comunicación entre servicios utilizando WebClient y un Circuit Breaker con Resilience4j. 
+Además, se implementa un mecanismo sencillo de trazabilidad mediante un identificador traceId incluido en los logs y en la cabecera HTTP, simulando conceptos de Distributed Tracing y Central Log Analysis.
+
+
+Para probar el GateWay, debemos hacer petición a /api/public/students
+
+#### GET /api/public/students
+
+Navegar a http://localhost:8080/api/public/students.
+Devuelve el flux con todos los empleados de la misma forma que el Controller normal.
+
+#### GET /api/public/students-fail
+
+Navegar o curl a http://localhost:8080/api/public/students-fail.
+Forzamos un timeout para que de fallo y salte el fallback del Circuit Breaker.
+
+#### Circuit Breaker (Resilience4j)
+
+Ambos endpoints están protegidos ante fallos con un método fallback que será lanzado cuando ocurra algún error.
+
+#### TraceID
+
+En los logs, comprobamos que el traceID se genera correctamente, por ejemplo:
+
+21:34:34.916 [http-nio-8080-exec-2] INFO  f.s.controller.GateWayController - Gateway recibe petición para /students [traceId=3439eed3-0fad-47c3-bc6e-dbf860d1b2be]
+
+Debería verse algo así por cada request al api gateway.
+
+Esto lo logramos gracias a la línea en application.properties:
+`logging.pattern.console=%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg [traceId=%X{traceId}]%n`
