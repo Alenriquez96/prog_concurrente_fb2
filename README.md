@@ -39,7 +39,7 @@ Deberíamos poder ver ahora la base de datos:
 
 Para poder comprobar el buen funcionamiento de Spring Batch, he establecido una lógica que **capitaliza** todos los nombres de los estudiantes y les **transforma la nota** ajustandose a un modelo más español de notas: de 95 -> 9,5
 
-Así, una muestra de datos es:
+Así, la muestra de datos, que encontamos en _/resources/students.csv_, es:
     
     id,name,averageGrade
     1,John Doe,85
